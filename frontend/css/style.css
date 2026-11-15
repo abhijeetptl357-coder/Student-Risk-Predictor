@@ -1,12 +1,12 @@
 /* ========================================================
-   EduRisk Studio — Modern Designer-First Light Theme
+   Student Risk Predictor — Modern Designer-First Light Theme
    ======================================================== */
 
 :root {
     /* ── Primary Light Theme (Default) ── */
-    --bg-app: #f8fafc;
+    --bg-app: #ffffff;
     --bg-surface: #ffffff;
-    --bg-subtle: #f1f5f9;
+    --bg-subtle: #f4f6fa;
     --bg-elevated: #ffffff;
     
     --border-light: rgba(226, 232, 240, 0.85);
@@ -738,9 +738,9 @@ body {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 7px;
+    height: 10px;
     border-radius: 999px;
-    background: #e2e8f0;
+    background: #dde3ec;
     outline: none;
     cursor: pointer;
     transition: background 0.15s ease;
@@ -753,19 +753,39 @@ body {
 .clean-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 22px;
-    height: 22px;
+    width: 26px;
+    height: 26px;
     border-radius: 50%;
     background: var(--accent-primary);
-    border: 3px solid #ffffff;
-    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    border: 3.5px solid #ffffff;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
     cursor: grab;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .clean-slider::-webkit-slider-thumb:hover {
     transform: scale(1.2);
-    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45);
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.5);
+}
+
+.clean-slider::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    border: 3.5px solid #ffffff;
+    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
+    cursor: grab;
+}
+
+.clean-slider::-moz-range-track {
+    height: 10px;
+    border-radius: 999px;
+    background: #dde3ec;
+}
+
+[data-theme="dark"] .clean-slider::-moz-range-track {
+    background: #334155;
 }
 
 .slider-boundary-marks {

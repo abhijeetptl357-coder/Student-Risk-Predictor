@@ -1,4 +1,4 @@
-# 🎓 EduRisk AI — Student Academic Risk Predictor & Early-Warning Platform
+# 🎓 Student Risk Predictor — Academic Early-Warning & Intervention Platform
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
@@ -29,7 +29,7 @@ An end-to-end Machine Learning web platform designed to detect student academic 
 
 Academic attrition and unnoticed student struggles often stem from an interplay of cognitive, behavioral, socioeconomic, and environmental factors. Traditional report cards identify problems *after* exams are failed. 
 
-**EduRisk AI** acts as a **predictive early-warning system**:
+**Student Risk Predictor** acts as a **predictive early-warning system**:
 * Ingests **17 multi-dimensional indicators** spanning study intensity, attendance, sleep balance, peer influence, family support, and resource availability.
 * Employs an $L_1$-regularized **Logistic Regression Pipeline** trained on 6,607 student records.
 * Provides **instant prognostic risk probability**, identifies primary risk drivers, and prescribes concrete intervention steps for academic counselors and educators.
