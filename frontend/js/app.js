@@ -324,7 +324,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ── 6. Robust Backend Connection Fetcher ──
     async function postPrediction(payload) {
-        // If served natively by FastAPI
+        // Production deployment (e.g. Render, Railway, custom domain): use relative API path directly
+        if (
+            window.location.hostname !== "localhost" &&
+            window.location.hostname !== "127.0.0.1" &&
+            window.location.protocol !== "file:"
+        ) {
+            return await fetch("/api/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+        }
+
+        // If served natively by FastAPI locally on port 8000, 8001, etc.
         if (window.location.port === "8000" || window.location.port === "8001") {
             return await fetch("/api/predict", {
                 method: "POST",
@@ -333,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // If on Live Server (5500) or file://, try ports 8000 and 8001
+        // If on local Live Server (5500) or file://, try backend ports
         const endpoints = [
             "http://127.0.0.1:8000/api/predict",
             "http://127.0.0.1:8001/api/predict",
