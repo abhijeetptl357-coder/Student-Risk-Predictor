@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Gauge & Result Display
     const gaugeArc = document.getElementById("gaugeArc");
     const radialContainer = document.querySelector(".radial-gauge-container");
+    const diagnosticHud = document.getElementById("diagnosticHud");
+    const spectrumMarker = document.getElementById("spectrumMarker");
+    const spectrumFill = document.getElementById("spectrumFill");
     const probaNumber = document.getElementById("probaNumber");
     const riskEmoji = document.getElementById("riskEmoji");
     const riskTierPill = document.getElementById("riskTierPill");
@@ -129,6 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const next = current === "dark" ? "light" : "dark";
         document.documentElement.setAttribute("data-theme", next);
         localStorage.setItem("srp_theme", next);
+        // Repaint all slider fill tracks for the new theme colors
+        SLIDERS.forEach((def) => {
+            const slider = document.getElementById(def.id);
+            if (slider) updateSliderVisual(def.id, slider.value);
+        });
         showToast(`Switched to ${next} theme`, "🌓");
     });
 
@@ -147,9 +155,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 tagElem.className = `val-tag ${statusClass}`;
             }
 
-            // Calculate percentage fill for CSS gradient track
+            // Calculate percentage fill for visible interactive slider bar
             const pct = ((value - slider.min) / (slider.max - slider.min)) * 100;
-            slider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${pct}%, var(--border-strong) ${pct}%, var(--border-strong) 100%)`;
+            const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+            const trackColor = isDark ? "#1e293b" : "#e2e8f0";
+            slider.style.background = `linear-gradient(to right, #2563eb 0%, #06b6d4 ${pct}%, ${trackColor} ${pct}%, ${trackColor} 100%)`;
         }
     }
 
@@ -450,31 +460,43 @@ document.addEventListener("DOMContentLoaded", () => {
         currentProbability = probability;
 
         // 2. Tier Styling & Narrative
-        radialContainer.classList.remove("safe", "warn", "danger");
+        if (radialContainer) radialContainer.classList.remove("safe", "warn", "danger");
+        if (diagnosticHud) diagnosticHud.classList.remove("safe", "warn", "danger");
         riskTierPill.classList.remove("safe", "warn", "danger");
 
         if (probability >= 0.7 || risk_level === "High Risk") {
-            radialContainer.classList.add("danger");
+            if (radialContainer) radialContainer.classList.add("danger");
+            if (diagnosticHud) diagnosticHud.classList.add("danger");
             riskTierPill.classList.add("danger");
             riskTierPill.textContent = "Critical Risk Profile";
             riskEmoji.textContent = "🚨";
             riskHeadline.textContent = "Immediate Academic Intervention Needed";
             riskNarrative.textContent = "High probability of course failure or dropping out. Disproportionate negative indicators require structured faculty mediation.";
         } else if (probability >= 0.4 || risk_level === "Medium Risk") {
-            radialContainer.classList.add("warn");
+            if (radialContainer) radialContainer.classList.add("warn");
+            if (diagnosticHud) diagnosticHud.classList.add("warn");
             riskTierPill.classList.add("warn");
             riskTierPill.textContent = "Moderate / Borderline Risk";
             riskEmoji.textContent = "⚡";
             riskHeadline.textContent = "Targeted Support Advised";
             riskNarrative.textContent = "Student displays mixed indicators. Proactive advising and habit reinforcement can prevent progression into severe risk.";
         } else {
-            radialContainer.classList.add("safe");
+            if (radialContainer) radialContainer.classList.add("safe");
+            if (diagnosticHud) diagnosticHud.classList.add("safe");
             riskTierPill.classList.add("safe");
             riskTierPill.textContent = "Low Risk · On Track";
             riskEmoji.textContent = "🌟";
             riskHeadline.textContent = "Academic Performance Strong";
             riskNarrative.textContent = "Consistent study habits, robust attendance, and positive support structures correlate with high achievement.";
             triggerConfetti();
+        }
+
+        // 2b. Update Rectangular Risk Spectrum Bar
+        if (spectrumMarker) {
+            spectrumMarker.style.left = `${Math.min(Math.max(probaPct, 2), 98)}%`;
+        }
+        if (spectrumFill) {
+            spectrumFill.style.width = `${Math.min(Math.max(probaPct, 0), 100)}%`;
         }
 
         // 3. Update Mini Comparative Bars
