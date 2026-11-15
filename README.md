@@ -4,8 +4,8 @@
 
 ### 🌐 Live Demo: **https://student-risk-predictor-hirt.onrender.com/**
 
-> No installation needed. Just open the link above and start using the app.
-> The app is hosted on Render's free tier, so if nobody has used it recently the **first load can take up to about a minute** while the server wakes up. After that it responds instantly.
+> No installation needed. Just open the link above and start using the website.
+> The website is hosted on Render's free tier, so if nobody has used it recently the **first load can take up to about a minute** while the server wakes up. After that it responds instantly.
 
 ---
 
@@ -52,8 +52,6 @@ The **Student Risk Predictor** moves that timeline earlier:
 2. **Predict** the probability that the student will score below 65 on the exam.
 3. **Explain** which factors protect the student and which ones put them at risk.
 4. **Act**: generate concrete, practical next steps for an advisor, teacher or counsellor.
-
-It is intended as a **decision-support tool for educators**, not an automatic decision maker (see [Limitations and Responsible Use](#-limitations-and-responsible-use)).
 
 ---
 
