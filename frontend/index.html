@@ -1,55 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EduRisk AI — Student Academic Risk Predictor</title>
-    <!-- Fonts -->
+    <title>Student Risk Predictor — Academic Early Warning &amp; Intelligence</title>
+    <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     <!-- Main Style -->
     <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-    <!-- Background Ambient Glows -->
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
+    <!-- Subtle Ambient Backdrop -->
+    <div class="ambient-canvas">
+        <div class="ambient-orb orb-1"></div>
+        <div class="ambient-orb orb-2"></div>
+        <div class="ambient-grid-overlay"></div>
+    </div>
 
-    <!-- Canvas for Confetti -->
+    <!-- Canvas for Celebratory Confetti -->
     <canvas id="confettiCanvas"></canvas>
 
-    <!-- ───── App Header ───── -->
-    <header class="app-header">
-        <div class="header-inner">
-            <div class="brand">
-                <div class="brand-icon">
-                    <span>🎓</span>
+    <!-- ───── Sleek Minimal Navigation Bar ───── -->
+    <header class="app-nav">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="brand-symbol">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                    </svg>
                 </div>
-                <div class="brand-text">
-                    <div class="brand-title-wrap">
-                        <h1 class="brand-title">EduRisk <span class="gradient-text">AI</span></h1>
-                        <span class="version-tag">v2.0</span>
-                    </div>
-                    <p class="brand-subtitle">Predictive Academic Early-Warning &amp; Intervention System</p>
+                <div class="brand-info">
+                    <span class="brand-title-compact">EduRisk <span class="brand-accent">Studio</span></span>
+                    <span class="brand-edition">Enterprise ML</span>
                 </div>
             </div>
 
-            <div class="header-controls">
-                <div class="status-indicator" id="systemStatus" title="Backend ML Model Status">
+            <div class="nav-actions">
+                <div class="status-indicator" id="systemStatus" title="Status of the trained inference pipeline">
                     <span class="status-dot"></span>
-                    <span class="status-label" id="statusLabel">ML Model Active</span>
+                    <span class="status-label" id="statusLabel">Model Ready</span>
                 </div>
 
-                <div class="live-toggle-wrap" title="Calculate risk dynamically as sliders move">
-                    <span class="toggle-caption">⚡ Live Predict</span>
+                <div class="live-toggle-pill" title="Toggle automatic real-time calculation">
+                    <span class="toggle-text">Live Predict</span>
                     <label class="switch">
                         <input type="checkbox" id="livePredictToggle" checked />
                         <span class="slider round"></span>
                     </label>
                 </div>
 
-                <button type="button" class="icon-btn theme-btn" id="themeToggle" aria-label="Toggle Theme" title="Toggle Dark/Light Mode">
+                <button type="button" class="theme-toggle-btn" id="themeToggle" aria-label="Toggle Theme" title="Toggle Light / Dark Mode">
                     <span class="theme-icon sun-icon">☀️</span>
                     <span class="theme-icon moon-icon">🌙</span>
                 </button>
@@ -57,28 +60,70 @@
         </div>
     </header>
 
-    <!-- ───── Main Layout ───── -->
-    <main class="app-container">
+    <!-- ───── Main Container ───── -->
+    <main class="app-shell">
 
-        <!-- ── Persona Quick-Load Cards ── -->
-        <section class="persona-section">
-            <div class="section-header-compact">
-                <span class="badge-pill">⚡ Quick Benchmark Profiles</span>
-                <span class="persona-hint">Click any archetype to instantly populate &amp; analyze</span>
+        <!-- ── Striking Hero Header Section ── -->
+        <section class="hero-showcase">
+            <div class="hero-badge-wrap">
+                <span class="hero-badge">
+                    <span class="hero-badge-spark">✦</span>
+                    Machine Learning Diagnostic Engine · Scikit-Learn
+                </span>
             </div>
 
-            <div class="persona-grid">
+            <h1 class="hero-headline">
+                Student Risk <span class="highlight-text">Predictor</span>
+            </h1>
+
+            <p class="hero-subhead">
+                A designer-grade diagnostic platform that evaluates 17 academic, behavioral, and environmental indicators to identify students needing proactive intervention before grades decline.
+            </p>
+
+            <div class="hero-kpis">
+                <div class="kpi-chip">
+                    <span class="kpi-value">6,607</span>
+                    <span class="kpi-label">Student Records</span>
+                </div>
+                <div class="kpi-divider"></div>
+                <div class="kpi-chip">
+                    <span class="kpi-value">&lt; 15ms</span>
+                    <span class="kpi-label">Inference Latency</span>
+                </div>
+                <div class="kpi-divider"></div>
+                <div class="kpi-chip">
+                    <span class="kpi-value">L1 Lasso</span>
+                    <span class="kpi-label">Regularized Model</span>
+                </div>
+                <div class="kpi-divider"></div>
+                <div class="kpi-chip">
+                    <span class="kpi-value">100%</span>
+                    <span class="kpi-label">Automated Attribution</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Archetype Quick Benchmark Presets ── -->
+        <section class="presets-section">
+            <div class="section-label-row">
+                <h3 class="section-micro-heading">Standard Archetype Benchmarks</h3>
+                <span class="section-micro-sub">Select any student profile to load standardized test vectors</span>
+            </div>
+
+            <div class="persona-row">
                 <!-- Profile 1: At-Risk -->
-                <div class="persona-card at-risk" id="personaAtRisk" role="button" tabindex="0">
-                    <div class="persona-top">
-                        <span class="persona-avatar">🚨</span>
-                        <div class="persona-meta">
-                            <span class="persona-name">Alex M.</span>
-                            <span class="persona-status-tag danger">High Risk Archetype</span>
+                <div class="persona-box at-risk" id="personaAtRisk" role="button" tabindex="0">
+                    <div class="persona-box-header">
+                        <div class="persona-avatar-wrap danger">
+                            <span>🚨</span>
+                        </div>
+                        <div class="persona-titles">
+                            <h4 class="persona-name">Alex Miller</h4>
+                            <span class="persona-tag danger">High Risk Profile</span>
                         </div>
                     </div>
-                    <p class="persona-desc">Low attendance (65%), 10h weekly study, negative peer circle &amp; struggling with basics.</p>
-                    <div class="persona-stat-preview">
+                    <p class="persona-summary">Attendance at 65%, 10h weekly study, negative peer circle, with zero tutoring.</p>
+                    <div class="persona-metric-pills">
                         <span>Att: <strong>65%</strong></span>
                         <span>Study: <strong>10h</strong></span>
                         <span>Score: <strong>55</strong></span>
@@ -86,16 +131,18 @@
                 </div>
 
                 <!-- Profile 2: Borderline -->
-                <div class="persona-card moderate" id="personaAverage" role="button" tabindex="0">
-                    <div class="persona-top">
-                        <span class="persona-avatar">📊</span>
-                        <div class="persona-meta">
-                            <span class="persona-name">Jordan T.</span>
-                            <span class="persona-status-tag warning">Moderate / Borderline</span>
+                <div class="persona-box warning" id="personaAverage" role="button" tabindex="0">
+                    <div class="persona-box-header">
+                        <div class="persona-avatar-wrap warning">
+                            <span>📊</span>
+                        </div>
+                        <div class="persona-titles">
+                            <h4 class="persona-name">Jordan Taylor</h4>
+                            <span class="persona-tag warning">Borderline / Moderate</span>
                         </div>
                     </div>
-                    <p class="persona-desc">Average attendance (80%), 20h study, balanced routine but requires regular monitoring.</p>
-                    <div class="persona-stat-preview">
+                    <p class="persona-summary">Attendance at 80%, 20h study, balanced routine requiring steady monitoring.</p>
+                    <div class="persona-metric-pills">
                         <span>Att: <strong>80%</strong></span>
                         <span>Study: <strong>20h</strong></span>
                         <span>Score: <strong>75</strong></span>
@@ -103,16 +150,18 @@
                 </div>
 
                 <!-- Profile 3: Honor Roll -->
-                <div class="persona-card success" id="personaHighAchiever" role="button" tabindex="0">
-                    <div class="persona-top">
-                        <span class="persona-avatar">🌟</span>
-                        <div class="persona-meta">
-                            <span class="persona-name">Maya K.</span>
-                            <span class="persona-status-tag safe">Honor Roll / Safe</span>
+                <div class="persona-box success" id="personaHighAchiever" role="button" tabindex="0">
+                    <div class="persona-box-header">
+                        <div class="persona-avatar-wrap success">
+                            <span>🌟</span>
+                        </div>
+                        <div class="persona-titles">
+                            <h4 class="persona-name">Maya Kapoor</h4>
+                            <span class="persona-tag success">Honor Roll / Safe</span>
                         </div>
                     </div>
-                    <p class="persona-desc">Outstanding attendance (96%), 35h study, high family involvement &amp; positive peer support.</p>
-                    <div class="persona-stat-preview">
+                    <p class="persona-summary">96% attendance, 35h study, high parental involvement, and strong peer habits.</p>
+                    <div class="persona-metric-pills">
                         <span>Att: <strong>96%</strong></span>
                         <span>Study: <strong>35h</strong></span>
                         <span>Score: <strong>92</strong></span>
@@ -120,54 +169,54 @@
                 </div>
 
                 <!-- Profile 4: Reset -->
-                <div class="persona-card reset-card" id="personaReset" role="button" tabindex="0">
-                    <div class="persona-top">
-                        <span class="persona-avatar">🔄</span>
-                        <div class="persona-meta">
-                            <span class="persona-name">Custom Draft</span>
-                            <span class="persona-status-tag neutral">Default State</span>
+                <div class="persona-box neutral" id="personaReset" role="button" tabindex="0">
+                    <div class="persona-box-header">
+                        <div class="persona-avatar-wrap neutral">
+                            <span>🔄</span>
+                        </div>
+                        <div class="persona-titles">
+                            <h4 class="persona-name">Baseline Default</h4>
+                            <span class="persona-tag neutral">Custom Draft</span>
                         </div>
                     </div>
-                    <p class="persona-desc">Reset all sliders and indicators to standard baseline values.</p>
-                    <div class="persona-stat-preview">
-                        <span>Clear All</span>
+                    <p class="persona-summary">Reset all input controls and slider tracks back to initial state.</p>
+                    <div class="persona-metric-pills">
+                        <span>Reset All Inputs</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ── Main Workspace: Form & Analytics ── -->
-        <div class="workspace-grid">
+        <!-- ── Main Workspace Grid: Controls + Live Diagnostic Display ── -->
+        <div class="workspace-layout">
 
-            <!-- ── Left: Parameter Tuning Form ── -->
-            <div class="form-column">
+            <!-- ── Left Column: Form Controls ── -->
+            <div class="controls-column">
                 <form id="predictionForm" autocomplete="off">
 
-                    <!-- Section 1: Core Academic Habits -->
-                    <div class="card glass-card">
-                        <div class="card-header">
-                            <div class="card-title-wrap">
-                                <span class="card-icon">📚</span>
-                                <div>
-                                    <h2 class="card-title">Academic Metrics &amp; Study Habits</h2>
-                                    <p class="card-desc">Direct indicators of cognitive engagement and consistency</p>
-                                </div>
+                    <!-- Card 1: Academic Habits -->
+                    <div class="designer-card">
+                        <div class="card-title-bar">
+                            <div class="card-icon-pill">📖</div>
+                            <div>
+                                <h3 class="card-main-title">Academic Habits &amp; Past Achievement</h3>
+                                <p class="card-sub-title">Core measurements of classroom engagement and scholastic consistency</p>
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <!-- Slider 1: Hours Studied -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Hours_Studied">Weekly Study Hours</label>
+                        <div class="card-fields-grid">
+                            <!-- Slider: Hours Studied -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Hours_Studied" class="field-label">Weekly Study Hours</label>
                                     <div class="field-value-badge" id="Hours_Studied_badge">
-                                        <span class="val-number" id="Hours_Studied_val">20</span> hrs
+                                        <span class="val-num" id="Hours_Studied_val">20</span> hrs
                                         <span class="val-tag" id="Hours_Studied_tag">Moderate</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Hours_Studied" min="1" max="44" value="20" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Hours_Studied" min="1" max="44" value="20" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>1 hr</span>
                                         <span>20 hrs</span>
                                         <span>44 hrs</span>
@@ -175,18 +224,18 @@
                                 </div>
                             </div>
 
-                            <!-- Slider 2: Attendance -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Attendance">Class Attendance Rate</label>
+                            <!-- Slider: Attendance -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Attendance" class="field-label">Classroom Attendance</label>
                                     <div class="field-value-badge" id="Attendance_badge">
-                                        <span class="val-number" id="Attendance_val">80</span>%
+                                        <span class="val-num" id="Attendance_val">80</span>%
                                         <span class="val-tag" id="Attendance_tag">Normal</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Attendance" min="60" max="100" value="80" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Attendance" min="60" max="100" value="80" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>60% (Min)</span>
                                         <span>80%</span>
                                         <span>100%</span>
@@ -194,18 +243,18 @@
                                 </div>
                             </div>
 
-                            <!-- Slider 3: Previous Scores -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Previous_Scores">Previous Exam Score</label>
+                            <!-- Slider: Previous Scores -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Previous_Scores" class="field-label">Prior Examination Score</label>
                                     <div class="field-value-badge" id="Previous_Scores_badge">
-                                        <span class="val-number" id="Previous_Scores_val">75</span> / 100
+                                        <span class="val-num" id="Previous_Scores_val">75</span> / 100
                                         <span class="val-tag" id="Previous_Scores_tag">Proficient</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Previous_Scores" min="50" max="100" value="75" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Previous_Scores" min="50" max="100" value="75" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>50</span>
                                         <span>75</span>
                                         <span>100</span>
@@ -213,18 +262,18 @@
                                 </div>
                             </div>
 
-                            <!-- Slider 4: Tutoring Sessions -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Tutoring_Sessions">Weekly Tutoring Sessions</label>
+                            <!-- Slider: Tutoring Sessions -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Tutoring_Sessions" class="field-label">Weekly Tutoring Sessions</label>
                                     <div class="field-value-badge" id="Tutoring_Sessions_badge">
-                                        <span class="val-number" id="Tutoring_Sessions_val">1</span> sess
+                                        <span class="val-num" id="Tutoring_Sessions_val">1</span> sess
                                         <span class="val-tag" id="Tutoring_Sessions_tag">Standard</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Tutoring_Sessions" min="0" max="8" value="1" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Tutoring_Sessions" min="0" max="8" value="1" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>0 (None)</span>
                                         <span>4 sessions</span>
                                         <span>8 max</span>
@@ -234,31 +283,29 @@
                         </div>
                     </div>
 
-                    <!-- Section 2: Health, Sleep & Routine -->
-                    <div class="card glass-card">
-                        <div class="card-header">
-                            <div class="card-title-wrap">
-                                <span class="card-icon">⚡</span>
-                                <div>
-                                    <h2 class="card-title">Lifestyle, Physical Health &amp; Sleep</h2>
-                                    <p class="card-desc">Somatic factors impacting alertness and stress tolerance</p>
-                                </div>
+                    <!-- Card 2: Lifestyle, Sleep & Physical Health -->
+                    <div class="designer-card">
+                        <div class="card-title-bar">
+                            <div class="card-icon-pill">⚡</div>
+                            <div>
+                                <h3 class="card-main-title">Lifestyle, Recovery &amp; Health</h3>
+                                <p class="card-sub-title">Somatic factors impacting cognitive endurance and psychological balance</p>
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <!-- Slider 5: Sleep Hours -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Sleep_Hours">Daily Sleep Duration</label>
+                        <div class="card-fields-grid">
+                            <!-- Slider: Sleep Hours -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Sleep_Hours" class="field-label">Daily Sleep Duration</label>
                                     <div class="field-value-badge" id="Sleep_Hours_badge">
-                                        <span class="val-number" id="Sleep_Hours_val">7</span> hrs
+                                        <span class="val-num" id="Sleep_Hours_val">7</span> hrs
                                         <span class="val-tag" id="Sleep_Hours_tag">Healthy</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Sleep_Hours" min="4" max="10" value="7" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Sleep_Hours" min="4" max="10" value="7" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>4 hrs</span>
                                         <span>7 hrs</span>
                                         <span>10 hrs</span>
@@ -266,18 +313,18 @@
                                 </div>
                             </div>
 
-                            <!-- Slider 6: Physical Activity -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Physical_Activity">Physical Activity / Sports</label>
+                            <!-- Slider: Physical Activity -->
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Physical_Activity" class="field-label">Physical Exercise</label>
                                     <div class="field-value-badge" id="Physical_Activity_badge">
-                                        <span class="val-number" id="Physical_Activity_val">3</span> hrs/wk
+                                        <span class="val-num" id="Physical_Activity_val">3</span> hrs/wk
                                         <span class="val-tag" id="Physical_Activity_tag">Active</span>
                                     </div>
                                 </div>
-                                <div class="slider-container">
-                                    <input type="range" id="Physical_Activity" min="0" max="6" value="3" class="modern-slider" />
-                                    <div class="slider-marks">
+                                <div class="slider-wrapper">
+                                    <input type="range" id="Physical_Activity" min="0" max="6" value="3" class="clean-slider" />
+                                    <div class="slider-boundary-marks">
                                         <span>0 hrs</span>
                                         <span>3 hrs</span>
                                         <span>6 hrs</span>
@@ -285,43 +332,39 @@
                                 </div>
                             </div>
 
-                            <!-- Toggle: Extracurricular Activities -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label>Extracurricular Activities</label>
-                                    <span class="field-sub">Clubs, music, or volunteer groups</span>
+                            <!-- Segmented: Extracurricular Activities -->
+                            <div class="field-box full-width">
+                                <div class="field-meta-row">
+                                    <label class="field-label">Extracurricular Engagement</label>
+                                    <span class="field-caption">Clubs, athletics, music, or volunteer groups</span>
                                 </div>
-                                <div class="segmented-control toggle-group" data-field="Extracurricular_Activities">
+                                <div class="clean-segmented toggle-group" data-field="Extracurricular_Activities">
                                     <button type="button" class="seg-btn selected" data-value="Yes">
-                                        <span>🎯 Yes, Participating</span>
+                                        <span>🎯 Actively Participating</span>
                                     </button>
                                     <button type="button" class="seg-btn" data-value="No">
-                                        <span>❌ None</span>
+                                        <span>No Activities</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Section 3: Family, Social & Socioeconomic -->
-                    <div class="card glass-card">
-                        <div class="card-header">
-                            <div class="card-title-wrap">
-                                <span class="card-icon">🏡</span>
-                                <div>
-                                    <h2 class="card-title">Family &amp; Environmental Factors</h2>
-                                    <p class="card-desc">Socioeconomic backing, parental support and home proximity</p>
-                                </div>
+                    <!-- Card 3: Family & Environment -->
+                    <div class="designer-card">
+                        <div class="card-title-bar">
+                            <div class="card-icon-pill">🏡</div>
+                            <div>
+                                <h3 class="card-main-title">Family &amp; Socioeconomic Support</h3>
+                                <p class="card-sub-title">Household involvement, parental education, and school proximity</p>
                             </div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-fields-grid">
                             <!-- Field: Parental Involvement -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Parental_Involvement">Parental Academic Involvement</label>
-                                </div>
-                                <select id="Parental_Involvement" class="modern-select">
+                            <div class="field-box">
+                                <label for="Parental_Involvement" class="field-label">Parental Involvement</label>
+                                <select id="Parental_Involvement" class="clean-select">
                                     <option value="Low">Low — Rare parent engagement</option>
                                     <option value="Medium" selected>Medium — Regular check-ins</option>
                                     <option value="High">High — Proactive direct guidance</option>
@@ -329,23 +372,19 @@
                             </div>
 
                             <!-- Field: Family Income -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Family_Income">Family Income Tier</label>
-                                </div>
-                                <select id="Family_Income" class="modern-select">
-                                    <option value="Low">Low Tier</option>
-                                    <option value="Medium" selected>Medium Tier</option>
-                                    <option value="High">High Tier</option>
+                            <div class="field-box">
+                                <label for="Family_Income" class="field-label">Family Income Tier</label>
+                                <select id="Family_Income" class="clean-select">
+                                    <option value="Low">Low Income Tier</option>
+                                    <option value="Medium" selected>Medium Income Tier</option>
+                                    <option value="High">High Income Tier</option>
                                 </select>
                             </div>
 
                             <!-- Field: Parental Education -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Parental_Education_Level">Parental Highest Education</label>
-                                </div>
-                                <select id="Parental_Education_Level" class="modern-select">
+                            <div class="field-box">
+                                <label for="Parental_Education_Level" class="field-label">Parental Highest Education</label>
+                                <select id="Parental_Education_Level" class="clean-select">
                                     <option value="High School">High School Diploma</option>
                                     <option value="College" selected>College Degree / Vocational</option>
                                     <option value="Postgraduate">Postgraduate / Professional</option>
@@ -353,11 +392,9 @@
                             </div>
 
                             <!-- Field: Distance from Home -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Distance_from_Home">Distance from School</label>
-                                </div>
-                                <select id="Distance_from_Home" class="modern-select">
+                            <div class="field-box">
+                                <label for="Distance_from_Home" class="field-label">Distance from Campus</label>
+                                <select id="Distance_from_Home" class="clean-select">
                                     <option value="Near">Near (&lt; 3 km)</option>
                                     <option value="Moderate" selected>Moderate (3 – 10 km)</option>
                                     <option value="Far">Far (&gt; 10 km commute)</option>
@@ -366,50 +403,44 @@
                         </div>
                     </div>
 
-                    <!-- Section 4: School Environment & Peer Dynamics -->
-                    <div class="card glass-card">
-                        <div class="card-header">
-                            <div class="card-title-wrap">
-                                <span class="card-icon">🏫</span>
-                                <div>
-                                    <h2 class="card-title">School Climate &amp; Psychological Support</h2>
-                                    <p class="card-desc">Peer group influence, motivation, teacher quality and resource access</p>
-                                </div>
+                    <!-- Card 4: School Environment & Peer Dynamics -->
+                    <div class="designer-card">
+                        <div class="card-title-bar">
+                            <div class="card-icon-pill">🏫</div>
+                            <div>
+                                <h3 class="card-main-title">Campus Climate &amp; Psychological Context</h3>
+                                <p class="card-sub-title">Peer influence, resource accessibility, instruction quality, and accommodations</p>
                             </div>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-fields-grid">
                             <!-- Motivation Level -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Motivation_Level">Student Self-Motivation</label>
-                                </div>
-                                <select id="Motivation_Level" class="modern-select">
-                                    <option value="Low">Low — Easily demoralized</option>
+                            <div class="field-box">
+                                <label for="Motivation_Level" class="field-label">Student Self-Motivation</label>
+                                <select id="Motivation_Level" class="clean-select">
+                                    <option value="Low">Low — Easily discouraged</option>
                                     <option value="Medium" selected>Medium — Steady effort</option>
-                                    <option value="High">High — Self-driven &amp; ambitious</option>
+                                    <option value="High">High — Highly self-driven</option>
                                 </select>
                             </div>
 
                             <!-- Peer Influence -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Peer_Influence">Peer Circle Influence</label>
-                                    <span class="field-sub">Significant ML Risk Weight</span>
+                            <div class="field-box">
+                                <div class="field-meta-row">
+                                    <label for="Peer_Influence" class="field-label">Peer Circle Influence</label>
+                                    <span class="field-badge-micro">High ML Weight</span>
                                 </div>
-                                <select id="Peer_Influence" class="modern-select">
-                                    <option value="Positive">Positive — Academic-focused friends</option>
-                                    <option value="Neutral" selected>Neutral — Mixed influences</option>
+                                <select id="Peer_Influence" class="clean-select">
+                                    <option value="Positive">Positive — Academic-focused group</option>
+                                    <option value="Neutral" selected>Neutral — Mixed group dynamics</option>
                                     <option value="Negative">Negative — Distracting / Truancy risk</option>
                                 </select>
                             </div>
 
                             <!-- Teacher Quality -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Teacher_Quality">Teacher Quality Rating</label>
-                                </div>
-                                <select id="Teacher_Quality" class="modern-select">
+                            <div class="field-box">
+                                <label for="Teacher_Quality" class="field-label">Instruction Quality Rating</label>
+                                <select id="Teacher_Quality" class="clean-select">
                                     <option value="Low">Low Rating</option>
                                     <option value="Medium" selected>Medium Rating</option>
                                     <option value="High">High Rating</option>
@@ -417,70 +448,61 @@
                             </div>
 
                             <!-- Access to Resources -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label for="Access_to_Resources">Access to Academic Resources</label>
-                                    <span class="field-sub">Books, computers, quiet study area</span>
-                                </div>
-                                <select id="Access_to_Resources" class="modern-select">
-                                    <option value="Low">Low — Limited access</option>
-                                    <option value="Medium" selected>Medium — Standard access</option>
-                                    <option value="High">High — Well-resourced</option>
+                            <div class="field-box">
+                                <label for="Access_to_Resources" class="field-label">Academic Resource Access</label>
+                                <select id="Access_to_Resources" class="clean-select">
+                                    <option value="Low">Low — Scant study materials</option>
+                                    <option value="Medium" selected>Medium — Adequate resources</option>
+                                    <option value="High">High — Well-equipped study setup</option>
                                 </select>
                             </div>
 
-                            <!-- Binary: School Type -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label>School Institution Type</label>
-                                </div>
-                                <div class="segmented-control toggle-group" data-field="School_Type">
+                            <!-- Toggle: School Type -->
+                            <div class="field-box">
+                                <label class="field-label">Institution Type</label>
+                                <div class="clean-segmented toggle-group" data-field="School_Type">
                                     <button type="button" class="seg-btn selected" data-value="Public">
-                                        <span>🏛️ Public School</span>
+                                        <span>🏛️ Public</span>
                                     </button>
                                     <button type="button" class="seg-btn" data-value="Private">
-                                        <span>🏰 Private Academy</span>
+                                        <span>Private</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Binary: Internet Access -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label>Reliable High-Speed Internet</label>
-                                </div>
-                                <div class="segmented-control toggle-group" data-field="Internet_Access">
+                            <!-- Toggle: Internet Access -->
+                            <div class="field-box">
+                                <label class="field-label">High-Speed Internet</label>
+                                <div class="clean-segmented toggle-group" data-field="Internet_Access">
                                     <button type="button" class="seg-btn selected" data-value="Yes">
-                                        <span>🌐 Yes, Connected</span>
+                                        <span>🌐 Connected</span>
                                     </button>
                                     <button type="button" class="seg-btn" data-value="No">
-                                        <span>📵 No / Unreliable</span>
+                                        <span>None</span>
                                     </button>
                                 </div>
                             </div>
 
-                            <!-- Binary: Learning Disabilities -->
-                            <div class="field-item">
-                                <div class="field-header">
-                                    <label>Identified Learning Disabilities</label>
-                                </div>
-                                <div class="segmented-control toggle-group" data-field="Learning_Disabilities">
+                            <!-- Toggle: Learning Disabilities -->
+                            <div class="field-box full-width">
+                                <label class="field-label">Identified Learning Disabilities</label>
+                                <div class="clean-segmented toggle-group" data-field="Learning_Disabilities">
                                     <button type="button" class="seg-btn selected" data-value="No">
                                         <span>🛡️ None Reported</span>
                                     </button>
                                     <button type="button" class="seg-btn" data-value="Yes">
-                                        <span>📋 Yes, Requires Accommodation</span>
+                                        <span>📋 Accommodation Required</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Submit Button -->
-                    <div class="submit-action-row">
-                        <button type="submit" class="primary-predict-btn" id="submitBtn">
-                            <span class="btn-glow"></span>
-                            <span class="btn-icon">⚡</span>
+                    <!-- Action Row: Manual Compute Button -->
+                    <div class="primary-action-wrap">
+                        <button type="submit" class="master-compute-btn" id="submitBtn">
+                            <span class="btn-shine"></span>
+                            <span class="btn-glyph">⚡</span>
                             <span id="btnText">Compute Risk Prediction</span>
                             <span id="btnSpinner" class="spinner hidden"></span>
                         </button>
@@ -488,159 +510,165 @@
                 </form>
             </div>
 
-            <!-- ── Right: Analytics & Intervention Dashboard ── -->
-            <div class="analytics-column">
-                <div class="sticky-analytics-wrap">
+            <!-- ── Right Column: Sticky Diagnostic Dashboard ── -->
+            <div class="diagnostic-column">
+                <div class="sticky-diagnostic-card">
 
-                    <!-- Live Assessment Card -->
-                    <div class="card glass-card analytics-card" id="analyticsCard">
-                        <div class="analytics-header">
-                            <div class="live-pulse-badge">
-                                <span class="pulse-ring"></span>
-                                <span class="pulse-dot"></span>
-                                <span class="pulse-text" id="analyticsModeText">Live Diagnostic</span>
+                    <!-- Diagnostic Card -->
+                    <div class="designer-card diagnostic-main" id="analyticsCard">
+                        
+                        <div class="diagnostic-header-bar">
+                            <div class="live-pill">
+                                <span class="pill-pulse-dot"></span>
+                                <span class="pill-text" id="analyticsModeText">Live Diagnostic</span>
                             </div>
-                            <span class="model-badge">Scikit-Learn Logistic L1</span>
+                            <span class="spec-label">Logistic Regression L1</span>
                         </div>
 
-                        <!-- Speedometer Gauge -->
-                        <div class="gauge-hero-section">
+                        <!-- Speedometer Radial Arc -->
+                        <div class="speedometer-block">
                             <div class="radial-gauge-container">
                                 <svg class="radial-gauge-svg" viewBox="0 0 200 200">
-                                    <!-- Background Track -->
+                                    <!-- Base Track -->
                                     <circle class="gauge-track" cx="100" cy="100" r="82" />
-                                    <!-- Dynamic Progress Arc -->
+                                    <!-- Animated Glowing Progress Arc -->
                                     <circle class="gauge-progress" id="gaugeArc" cx="100" cy="100" r="82" />
                                 </svg>
 
                                 <div class="gauge-center-content">
                                     <span class="gauge-emoji" id="riskEmoji">📊</span>
-                                    <div class="gauge-value-wrap">
+                                    <div class="gauge-readout">
                                         <span class="gauge-percentage" id="probaNumber">0.0</span>
                                         <span class="gauge-percent-symbol">%</span>
                                     </div>
-                                    <span class="gauge-label">Support Probability</span>
+                                    <span class="gauge-label">Risk Probability</span>
                                 </div>
                             </div>
 
-                            <div class="risk-classification-box">
-                                <span class="risk-tier-pill" id="riskTierPill">Evaluating...</span>
-                                <h3 class="risk-headline" id="riskHeadline">Awaiting Input Analysis</h3>
-                                <p class="risk-narrative" id="riskNarrative">Adjust parameters on the left or select a profile to view prognostic indicators.</p>
+                            <div class="verdict-block">
+                                <span class="verdict-tier-badge" id="riskTierPill">Evaluating...</span>
+                                <h3 class="verdict-headline" id="riskHeadline">Analyzing Profile</h3>
+                                <p class="verdict-narrative" id="riskNarrative">Adjust input values on the left to observe real-time prognostic shifts.</p>
                             </div>
                         </div>
 
-                        <!-- Comparative Metrics Radar/Bar Breakdown -->
-                        <div class="metrics-breakdown-section">
-                            <div class="breakdown-title-row">
-                                <span class="breakdown-title">📊 Key Metrics vs Baseline</span>
-                                <span class="breakdown-sub">Optimal Benchmark</span>
+                        <!-- Comparative Metrics vs Optimal Standards -->
+                        <div class="benchmark-comparison-block">
+                            <div class="comparison-title-row">
+                                <span class="comparison-title">Core Factor Benchmarks</span>
+                                <span class="comparison-legend">Target Standard</span>
                             </div>
 
-                            <div class="bar-metric-item">
-                                <div class="bar-metric-labels">
+                            <!-- Bar 1 -->
+                            <div class="factor-meter">
+                                <div class="factor-meter-header">
                                     <span>Attendance Rate</span>
-                                    <span class="metric-score" id="barMetricAtt">80%</span>
+                                    <span class="meter-num" id="barMetricAtt">80%</span>
                                 </div>
-                                <div class="mini-bar-track">
-                                    <div class="mini-bar-fill" id="barFillAtt" style="width: 80%;"></div>
-                                    <div class="mini-bar-target" style="left: 90%;" title="Target: 90%+"></div>
-                                </div>
-                            </div>
-
-                            <div class="bar-metric-item">
-                                <div class="bar-metric-labels">
-                                    <span>Study Intensity</span>
-                                    <span class="metric-score" id="barMetricStudy">20 hrs</span>
-                                </div>
-                                <div class="mini-bar-track">
-                                    <div class="mini-bar-fill" id="barFillStudy" style="width: 50%;"></div>
-                                    <div class="mini-bar-target" style="left: 65%;" title="Target: 25+ hrs"></div>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="barFillAtt" style="width: 80%;"></div>
+                                    <div class="meter-pin" style="left: 90%;" title="Target: 90%+"></div>
                                 </div>
                             </div>
 
-                            <div class="bar-metric-item">
-                                <div class="bar-metric-labels">
-                                    <span>Previous Score Level</span>
-                                    <span class="metric-score" id="barMetricScore">75</span>
+                            <!-- Bar 2 -->
+                            <div class="factor-meter">
+                                <div class="factor-meter-header">
+                                    <span>Weekly Study Intensity</span>
+                                    <span class="meter-num" id="barMetricStudy">20 hrs</span>
                                 </div>
-                                <div class="mini-bar-track">
-                                    <div class="mini-bar-fill" id="barFillScore" style="width: 50%;"></div>
-                                    <div class="mini-bar-target" style="left: 60%;" title="Target: 80+"></div>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="barFillStudy" style="width: 50%;"></div>
+                                    <div class="meter-pin" style="left: 65%;" title="Target: 25+ hrs"></div>
                                 </div>
                             </div>
 
-                            <div class="bar-metric-item">
-                                <div class="bar-metric-labels">
-                                    <span>Sleep &amp; Recovery Balance</span>
-                                    <span class="metric-score" id="barMetricSleep">7 hrs</span>
+                            <!-- Bar 3 -->
+                            <div class="factor-meter">
+                                <div class="factor-meter-header">
+                                    <span>Prior Score Level</span>
+                                    <span class="meter-num" id="barMetricScore">75</span>
                                 </div>
-                                <div class="mini-bar-track">
-                                    <div class="mini-bar-fill" id="barFillSleep" style="width: 50%;"></div>
-                                    <div class="mini-bar-target" style="left: 60%;" title="Target: 7-8 hrs"></div>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="barFillScore" style="width: 50%;"></div>
+                                    <div class="meter-pin" style="left: 60%;" title="Target: 80+"></div>
+                                </div>
+                            </div>
+
+                            <!-- Bar 4 -->
+                            <div class="factor-meter">
+                                <div class="factor-meter-header">
+                                    <span>Sleep &amp; Rest Balance</span>
+                                    <span class="meter-num" id="barMetricSleep">7 hrs</span>
+                                </div>
+                                <div class="meter-track">
+                                    <div class="meter-fill" id="barFillSleep" style="width: 50%;"></div>
+                                    <div class="meter-pin" style="left: 60%;" title="Target: 7-8 hrs"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Drivers & Strengths Pill Badges -->
-                        <div class="factors-section">
-                            <div class="factors-column strengths-col">
-                                <div class="factors-header">
-                                    <span class="factors-icon">🛡️</span>
+                        <!-- Protective Strengths vs Risk Contributors -->
+                        <div class="attribution-grid">
+                            <div class="attribution-card strengths">
+                                <div class="attribution-header">
+                                    <span class="attr-icon">🛡️</span>
                                     <span>Protective Factors</span>
                                 </div>
-                                <ul class="factors-list" id="strengthsList">
+                                <ul class="attribution-items" id="strengthsList">
                                     <li>Attendance above threshold</li>
-                                    <li>Active physical routine</li>
+                                    <li>Physical activity routine</li>
                                 </ul>
                             </div>
 
-                            <div class="factors-column risks-col">
-                                <div class="factors-header">
-                                    <span class="factors-icon">⚠️</span>
+                            <div class="attribution-card risks">
+                                <div class="attribution-header">
+                                    <span class="attr-icon">⚠️</span>
                                     <span>Risk Contributors</span>
                                 </div>
-                                <ul class="factors-list" id="risksList">
-                                    <li>Neutral peer reinforcement</li>
-                                    <li>Modest tutoring exposure</li>
+                                <ul class="attribution-items" id="risksList">
+                                    <li>Mixed peer influence</li>
+                                    <li>Limited supplemental tutoring</li>
                                 </ul>
                             </div>
                         </div>
 
-                        <!-- Recommended Action Plan -->
-                        <div class="action-plan-section">
-                            <div class="action-plan-header">
-                                <span>🎯 Prescriptive Intervention Steps</span>
-                                <span class="badge-mini" id="actionCountBadge">3 steps</span>
+                        <!-- Actionable Intervention Steps -->
+                        <div class="intervention-plan-block">
+                            <div class="plan-header">
+                                <div class="plan-title-wrap">
+                                    <span class="plan-title">Prescribed Interventions</span>
+                                    <span class="plan-counter" id="actionCountBadge">3 steps</span>
+                                </div>
                             </div>
-                            <div class="action-plan-items" id="actionPlanContainer">
-                                <!-- Populated dynamically -->
+                            <div class="plan-list" id="actionPlanContainer">
+                                <!-- Populated dynamically by app.js -->
                             </div>
                         </div>
 
-                        <!-- Interactive Tools: What-If Simulator & Export -->
-                        <div class="action-footer-buttons">
-                            <button type="button" class="secondary-tool-btn" id="btnSimulateIntervention">
+                        <!-- Interactive Action Utilities -->
+                        <div class="card-action-tools">
+                            <button type="button" class="tool-btn optimize" id="btnSimulateIntervention">
                                 <span>💡 Auto-Optimize to Low Risk</span>
                             </button>
-                            <button type="button" class="secondary-tool-btn" id="btnExportReport">
+                            <button type="button" class="tool-btn export" id="btnExportReport">
                                 <span>📋 Copy Diagnostic Brief</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Error Toast / Card -->
-                    <div id="errorCard" class="error-banner hidden">
-                        <span class="error-icon">⚠️</span>
-                        <div class="error-content">
-                            <strong>System Notice:</strong>
+                    <!-- Error Alert -->
+                    <div id="errorCard" class="error-notification hidden">
+                        <span class="error-glyph">⚠️</span>
+                        <div class="error-details">
+                            <strong class="error-title">Connection Notice:</strong>
                             <span id="errorText">Failed to connect to backend server.</span>
                         </div>
                     </div>
 
-                    <!-- Toast Notification -->
-                    <div id="toastNotification" class="toast hidden">
-                        <span class="toast-icon" id="toastIcon">📋</span>
+                    <!-- Floating Toast Notification -->
+                    <div id="toastNotification" class="toast-popup hidden">
+                        <span class="toast-glyph" id="toastIcon">📋</span>
                         <span id="toastMsg">Brief copied to clipboard!</span>
                     </div>
 
@@ -650,14 +678,19 @@
 
     </main>
 
-    <!-- ───── App Footer ───── -->
-    <footer class="app-footer">
-        <div class="footer-inner">
-            <p>EduRisk AI Platform · Powered by FastAPI &amp; Scikit-Learn Pipeline · Student Early-Warning &amp; Academic Resilience</p>
-            <div class="footer-links">
-                <a href="/docs" target="_blank" rel="noopener">Interactive API Swagger Docs</a>
-                <span class="sep">·</span>
+    <!-- ───── Clean Footer ───── -->
+    <footer class="app-base-footer">
+        <div class="footer-wrapper">
+            <div class="footer-brand-meta">
+                <span class="footer-logo">🎓 EduRisk Studio</span>
+                <span class="footer-desc">Automated Academic Diagnostic &amp; Intervention Intelligence</span>
+            </div>
+            <div class="footer-nav-links">
+                <a href="/docs" target="_blank" rel="noopener">Interactive API Docs</a>
+                <span class="dot-sep">·</span>
                 <a href="/api/health" target="_blank" rel="noopener">System Health</a>
+                <span class="dot-sep">·</span>
+                <a href="https://github.com/abhijeetptl357-coder/Student-Risk-Predictor" target="_blank" rel="noopener">GitHub Repository</a>
             </div>
         </div>
     </footer>

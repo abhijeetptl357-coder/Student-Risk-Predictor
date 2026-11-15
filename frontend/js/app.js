@@ -120,8 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let debounceTimer = null;
     let confettiActive = false;
 
-    // ── 1. Theme Switcher (Dark / Light) ──
-    const savedTheme = localStorage.getItem("edurisk_theme") || "dark";
+    // ── 1. Theme Switcher (Light / Dark) ──
+    const savedTheme = localStorage.getItem("edurisk_theme") || "light";
     document.documentElement.setAttribute("data-theme", savedTheme);
 
     themeToggle.addEventListener("click", () => {
