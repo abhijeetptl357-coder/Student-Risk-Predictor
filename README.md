@@ -1,4 +1,4 @@
-# 🎓 Student Risk Predictor — Academic Early-Warning & Intervention Platform
+# 🎓 Student Risk Predictor: Academic Early-Warning & Intervention Platform
 
 An end-to-end Machine Learning web application designed to detect student academic vulnerabilities early and generate actionable, personalized intervention strategies. Built with an asynchronous **FastAPI** backend and an interactive, modern **frontend dashboard** (HTML5 / CSS3 / Vanilla JS).
 
