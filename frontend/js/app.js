@@ -1,49 +1,190 @@
 /* ========================================================
-   Student Academic Risk Predictor — Frontend Logic
+   EduRisk AI — Modern Interactive Application Logic
    ======================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
+    // ── DOM References ──
     const form = document.getElementById("predictionForm");
     const submitBtn = document.getElementById("submitBtn");
     const btnText = document.getElementById("btnText");
     const btnSpinner = document.getElementById("btnSpinner");
-    const resultCard = document.getElementById("resultCard");
+    const liveToggle = document.getElementById("livePredictToggle");
+    const themeToggle = document.getElementById("themeToggle");
+    const systemStatus = document.getElementById("systemStatus");
+    const statusLabel = document.getElementById("statusLabel");
     const errorCard = document.getElementById("errorCard");
     const errorText = document.getElementById("errorText");
+    const toast = document.getElementById("toastNotification");
+    const toastMsg = document.getElementById("toastMsg");
+    const toastIcon = document.getElementById("toastIcon");
 
-    // ── 1. Numerical Sliders Configuration ──
-    const sliders = [
-        "Hours_Studied",
-        "Attendance",
-        "Sleep_Hours",
-        "Previous_Scores",
-        "Tutoring_Sessions",
-        "Physical_Activity",
+    // Gauge & Result Display
+    const gaugeArc = document.getElementById("gaugeArc");
+    const radialContainer = document.querySelector(".radial-gauge-container");
+    const probaNumber = document.getElementById("probaNumber");
+    const riskEmoji = document.getElementById("riskEmoji");
+    const riskTierPill = document.getElementById("riskTierPill");
+    const riskHeadline = document.getElementById("riskHeadline");
+    const riskNarrative = document.getElementById("riskNarrative");
+    const analyticsModeText = document.getElementById("analyticsModeText");
+
+    // Breakdown Bars
+    const barMetricAtt = document.getElementById("barMetricAtt");
+    const barFillAtt = document.getElementById("barFillAtt");
+    const barMetricStudy = document.getElementById("barMetricStudy");
+    const barFillStudy = document.getElementById("barFillStudy");
+    const barMetricScore = document.getElementById("barMetricScore");
+    const barFillScore = document.getElementById("barFillScore");
+    const barMetricSleep = document.getElementById("barMetricSleep");
+    const barFillSleep = document.getElementById("barFillSleep");
+
+    // Factors & Action Plan
+    const strengthsList = document.getElementById("strengthsList");
+    const risksList = document.getElementById("risksList");
+    const actionPlanContainer = document.getElementById("actionPlanContainer");
+    const actionCountBadge = document.getElementById("actionCountBadge");
+
+    // Tools
+    const btnSimulate = document.getElementById("btnSimulateIntervention");
+    const btnExport = document.getElementById("btnExportReport");
+
+    // Circumference for r=82 SVG Circle
+    const CIRCUMFERENCE = 2 * Math.PI * 82; // ≈ 515.22
+    gaugeArc.style.strokeDasharray = `${CIRCUMFERENCE} ${CIRCUMFERENCE}`;
+    gaugeArc.style.strokeDashoffset = CIRCUMFERENCE;
+
+    // Numerical Sliders definitions & metadata
+    const SLIDERS = [
+        {
+            id: "Hours_Studied",
+            min: 1,
+            max: 44,
+            unit: "hrs",
+            getTag: (v) => (v < 12 ? ["Low", "danger"] : v < 25 ? ["Moderate", "warning"] : ["Intense", "safe"]),
+        },
+        {
+            id: "Attendance",
+            min: 60,
+            max: 100,
+            unit: "%",
+            getTag: (v) => (v < 75 ? ["Critical", "danger"] : v < 85 ? ["Normal", "warning"] : ["Optimal", "safe"]),
+        },
+        {
+            id: "Previous_Scores",
+            min: 50,
+            max: 100,
+            unit: "",
+            getTag: (v) => (v < 65 ? ["Struggling", "danger"] : v < 80 ? ["Proficient", "warning"] : ["High Mark", "safe"]),
+        },
+        {
+            id: "Tutoring_Sessions",
+            min: 0,
+            max: 8,
+            unit: "sess",
+            getTag: (v) => (v === 0 ? ["None", "neutral"] : v <= 2 ? ["Standard", "safe"] : ["Intensive", "safe"]),
+        },
+        {
+            id: "Sleep_Hours",
+            min: 4,
+            max: 10,
+            unit: "hrs",
+            getTag: (v) => (v < 6 ? ["Deprived", "danger"] : v <= 8 ? ["Healthy", "safe"] : ["Excessive", "warning"]),
+        },
+        {
+            id: "Physical_Activity",
+            min: 0,
+            max: 6,
+            unit: "hrs/wk",
+            getTag: (v) => (v === 0 ? ["Sedentary", "danger"] : v <= 3 ? ["Active", "safe"] : ["High", "safe"]),
+        },
     ];
 
-    sliders.forEach((id) => {
-        const slider = document.getElementById(id);
-        const display = document.getElementById(`${id}_val`);
-        if (slider && display) {
+    // Dropdowns
+    const DROPDOWNS = [
+        "Parental_Involvement",
+        "Family_Income",
+        "Parental_Education_Level",
+        "Motivation_Level",
+        "Distance_from_Home",
+        "Teacher_Quality",
+        "Peer_Influence",
+        "Access_to_Resources",
+    ];
+
+    // Toggle Groups
+    const toggleGroups = document.querySelectorAll(".toggle-group");
+
+    // State Variables
+    let currentProbability = 0;
+    let isEvaluating = false;
+    let debounceTimer = null;
+    let confettiActive = false;
+
+    // ── 1. Theme Switcher (Dark / Light) ──
+    const savedTheme = localStorage.getItem("edurisk_theme") || "dark";
+    document.documentElement.setAttribute("data-theme", savedTheme);
+
+    themeToggle.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme");
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("edurisk_theme", next);
+        showToast(`Switched to ${next} theme`, "🌓");
+    });
+
+    // ── 2. Sliders Setup & Styling ──
+    function updateSliderVisual(sliderId, value) {
+        const slider = document.getElementById(sliderId);
+        const valElem = document.getElementById(`${sliderId}_val`);
+        const tagElem = document.getElementById(`${sliderId}_tag`);
+        const def = SLIDERS.find((s) => s.id === sliderId);
+
+        if (slider && valElem) {
+            valElem.textContent = value;
+            if (def && tagElem) {
+                const [tagText, statusClass] = def.getTag(Number(value));
+                tagElem.textContent = tagText;
+                tagElem.className = `val-tag ${statusClass}`;
+            }
+
+            // Calculate percentage fill for CSS gradient track
+            const pct = ((value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = `linear-gradient(to right, var(--primary) 0%, var(--primary) ${pct}%, var(--border-strong) ${pct}%, var(--border-strong) 100%)`;
+        }
+    }
+
+    SLIDERS.forEach((def) => {
+        const slider = document.getElementById(def.id);
+        if (slider) {
+            updateSliderVisual(def.id, slider.value);
             slider.addEventListener("input", (e) => {
-                display.textContent = e.target.value;
+                updateSliderVisual(def.id, e.target.value);
+                triggerLiveEvaluate();
             });
         }
     });
 
-    // ── 2. Toggle Buttons (Binary Attributes) ──
-    const toggleGroups = document.querySelectorAll(".toggle-group");
+    // ── 3. Segmented Button Controls (Toggles) ──
     toggleGroups.forEach((group) => {
-        const buttons = group.querySelectorAll(".toggle-btn");
+        const buttons = group.querySelectorAll(".seg-btn");
         buttons.forEach((btn) => {
             btn.addEventListener("click", () => {
                 buttons.forEach((b) => b.classList.remove("selected"));
                 btn.classList.add("selected");
+                triggerLiveEvaluate();
             });
         });
     });
 
-    // ── 3. Preset Profiles Definition ──
+    // Dropdowns trigger live eval
+    DROPDOWNS.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("change", triggerLiveEvaluate);
+        }
+    });
+
+    // ── 4. Archetype Presets ──
     const PRESETS = {
         atRisk: {
             Hours_Studied: 10,
@@ -107,30 +248,21 @@ document.addEventListener("DOMContentLoaded", () => {
         },
     };
 
-    function applyPreset(preset) {
-        // Set sliders
-        sliders.forEach((id) => {
-            const slider = document.getElementById(id);
-            const display = document.getElementById(`${id}_val`);
-            if (slider && preset[id] !== undefined) {
-                slider.value = preset[id];
-                if (display) display.textContent = preset[id];
+    function applyPreset(preset, cardElem) {
+        document.querySelectorAll(".persona-card").forEach((c) => c.classList.remove("active"));
+        if (cardElem) cardElem.classList.add("active");
+
+        // Set sliders with smooth visual updates
+        SLIDERS.forEach((def) => {
+            const slider = document.getElementById(def.id);
+            if (slider && preset[def.id] !== undefined) {
+                slider.value = preset[def.id];
+                updateSliderVisual(def.id, preset[def.id]);
             }
         });
 
         // Set dropdowns
-        const dropdowns = [
-            "Parental_Involvement",
-            "Family_Income",
-            "Parental_Education_Level",
-            "Motivation_Level",
-            "Distance_from_Home",
-            "Teacher_Quality",
-            "Peer_Influence",
-            "Access_to_Resources",
-        ];
-
-        dropdowns.forEach((id) => {
+        DROPDOWNS.forEach((id) => {
             const el = document.getElementById(id);
             if (el && preset[id] !== undefined) {
                 el.value = preset[id];
@@ -141,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toggleGroups.forEach((group) => {
             const field = group.getAttribute("data-field");
             if (field && preset[field] !== undefined) {
-                const buttons = group.querySelectorAll(".toggle-btn");
+                const buttons = group.querySelectorAll(".seg-btn");
                 buttons.forEach((btn) => {
                     if (btn.getAttribute("data-value") === preset[field]) {
                         btn.classList.add("selected");
@@ -152,53 +284,36 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Hide old results on preset change
-        resultCard.classList.add("hidden");
-        errorCard.classList.add("hidden");
+        executePrediction();
     }
 
-    // Attach preset button handlers
-    const btnAtRisk = document.getElementById("btnAtRisk");
-    const btnAverage = document.getElementById("btnAverage");
-    const btnHighAchiever = document.getElementById("btnHighAchiever");
-    const btnReset = document.getElementById("btnReset");
+    const personaAtRisk = document.getElementById("personaAtRisk");
+    const personaAverage = document.getElementById("personaAverage");
+    const personaHighAchiever = document.getElementById("personaHighAchiever");
+    const personaReset = document.getElementById("personaReset");
 
-    if (btnAtRisk) btnAtRisk.addEventListener("click", () => applyPreset(PRESETS.atRisk));
-    if (btnAverage) btnAverage.addEventListener("click", () => applyPreset(PRESETS.average));
-    if (btnHighAchiever) btnHighAchiever.addEventListener("click", () => applyPreset(PRESETS.highAchiever));
-    if (btnReset) btnReset.addEventListener("click", () => applyPreset(PRESETS.average));
+    if (personaAtRisk) personaAtRisk.addEventListener("click", () => applyPreset(PRESETS.atRisk, personaAtRisk));
+    if (personaAverage) personaAverage.addEventListener("click", () => applyPreset(PRESETS.average, personaAverage));
+    if (personaHighAchiever) personaHighAchiever.addEventListener("click", () => applyPreset(PRESETS.highAchiever, personaHighAchiever));
+    if (personaReset) personaReset.addEventListener("click", () => applyPreset(PRESETS.average, personaReset));
 
-    // ── 4. Helper: Collect Form Data ──
+    // ── 5. Form Payload Harvester ──
     function getFormData() {
         const data = {};
 
-        // Numeric fields from sliders
-        sliders.forEach((id) => {
-            const el = document.getElementById(id);
-            data[id] = parseInt(el.value, 10);
+        SLIDERS.forEach((def) => {
+            const el = document.getElementById(def.id);
+            data[def.id] = parseInt(el.value, 10);
         });
 
-        // Dropdown fields
-        const dropdowns = [
-            "Parental_Involvement",
-            "Family_Income",
-            "Parental_Education_Level",
-            "Motivation_Level",
-            "Distance_from_Home",
-            "Teacher_Quality",
-            "Peer_Influence",
-            "Access_to_Resources",
-        ];
-
-        dropdowns.forEach((id) => {
+        DROPDOWNS.forEach((id) => {
             const el = document.getElementById(id);
             data[id] = el.value;
         });
 
-        // Toggle button fields
         toggleGroups.forEach((group) => {
             const field = group.getAttribute("data-field");
-            const selectedBtn = group.querySelector(".toggle-btn.selected");
+            const selectedBtn = group.querySelector(".seg-btn.selected");
             if (field && selectedBtn) {
                 data[field] = selectedBtn.getAttribute("data-value");
             }
@@ -207,108 +322,420 @@ document.addEventListener("DOMContentLoaded", () => {
         return data;
     }
 
-    // ── 5. Form Submit Handler ──
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+    // ── 6. Robust Backend Connection Fetcher ──
+    async function postPrediction(payload) {
+        // If served natively by FastAPI
+        if (window.location.port === "8000" || window.location.port === "8001") {
+            return await fetch("/api/predict", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+        }
 
-        // Reset display
-        resultCard.classList.add("hidden");
-        errorCard.classList.add("hidden");
+        // If on Live Server (5500) or file://, try ports 8000 and 8001
+        const endpoints = [
+            "http://127.0.0.1:8000/api/predict",
+            "http://127.0.0.1:8001/api/predict",
+            "/api/predict",
+        ];
 
-        // Loading state
-        submitBtn.disabled = true;
-        btnText.textContent = "Analyzing Risk Profile...";
-        btnSpinner.classList.remove("hidden");
+        let lastErr = null;
+        for (const url of endpoints) {
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                });
+                if (response.status !== 404) {
+                    return response;
+                }
+            } catch (err) {
+                lastErr = err;
+            }
+        }
+        throw lastErr || new Error("Failed to reach FastAPI backend on port 8000 or 8001.");
+    }
+
+    // ── 7. Core Prediction Execution ──
+    async function executePrediction() {
+        if (isEvaluating) return;
+        isEvaluating = true;
+
+        if (errorCard) errorCard.classList.add("hidden");
+        if (btnSpinner) btnSpinner.classList.remove("hidden");
+        if (btnText) btnText.textContent = "Analyzing Risk...";
+        if (submitBtn) submitBtn.disabled = true;
 
         const payload = getFormData();
 
         try {
-            const response = await fetch("/api/predict", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                // If FastAPI returned validation details (422), format them nicely
-                if (data.detail && Array.isArray(data.detail)) {
-                    const messages = data.detail.map((err) => `${err.loc.join(".")}: ${err.msg}`).join("; ");
-                    throw new Error(`Validation Error: ${messages}`);
-                }
-                throw new Error(data.detail || data.error || `Server error (${response.status})`);
+            const response = await postPrediction(payload);
+            let result;
+            try {
+                result = await response.json();
+            } catch {
+                throw new Error(`Server returned non-JSON response (${response.status})`);
             }
 
-            renderResult(data);
+            if (!response.ok) {
+                if (result.detail && Array.isArray(result.detail)) {
+                    const msg = result.detail.map((d) => `${d.loc.join(".")}: ${d.msg}`).join("; ");
+                    throw new Error(`Validation Error: ${msg}`);
+                }
+                throw new Error(result.detail || result.error || `Server error (${response.status})`);
+            }
+
+            // Render modern analytics
+            renderAnalytics(result, payload);
+
+            // Update status indicator
+            if (systemStatus && statusLabel) {
+                systemStatus.className = "status-indicator";
+                statusLabel.textContent = "ML Model Active";
+            }
         } catch (err) {
-            console.error("Prediction error:", err);
-            errorText.textContent = err.message || "Failed to connect to the backend server.";
-            errorCard.classList.remove("hidden");
-            errorCard.scrollIntoView({ behavior: "smooth" });
+            console.error("Evaluation error:", err);
+            if (errorCard && errorText) {
+                errorText.textContent = err.message || "Failed to connect to backend.";
+                errorCard.classList.remove("hidden");
+            }
+            if (statusLabel) statusLabel.textContent = "Connection Alert";
         } finally {
-            submitBtn.disabled = false;
-            btnText.textContent = "Predict Risk";
-            btnSpinner.classList.add("hidden");
+            isEvaluating = false;
+            if (btnSpinner) btnSpinner.classList.add("hidden");
+            if (btnText) btnText.textContent = "Compute Risk Prediction";
+            if (submitBtn) submitBtn.disabled = false;
         }
+    }
+
+    function triggerLiveEvaluate() {
+        if (!liveToggle.checked) return;
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            executePrediction();
+        }, 220);
+    }
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        executePrediction();
     });
 
-    // ── 6. Render Result & Progress Gauge ──
-    function renderResult(data) {
-        const { prediction, probability, label, risk_level } = data;
+    // ── 8. Render Rich Analytics & Speedometer ──
+    function renderAnalytics(data, payload) {
+        const { probability, prediction, risk_level } = data;
+        const probaPct = probability * 100;
 
-        const circle = document.getElementById("resultCircle");
-        const icon = document.getElementById("resultIcon");
-        const resLabel = document.getElementById("resultLabel");
-        const resRisk = document.getElementById("resultRisk");
-        const resProba = document.getElementById("resultProba");
-        const resRiskLevel = document.getElementById("resultRiskLevel");
-        const riskBarFill = document.getElementById("riskBarFill");
+        // 1. Animate Speedometer Arc
+        const targetOffset = CIRCUMFERENCE * (1 - probability);
+        gaugeArc.style.strokeDashoffset = targetOffset;
 
-        // Reset styling classes
-        circle.className = "result-circle";
-        resLabel.className = "result-label";
-        if (riskBarFill) riskBarFill.className = "risk-bar-fill";
+        // Animate counter number
+        animateValue(probaNumber, currentProbability * 100, probaPct, 600);
+        currentProbability = probability;
 
-        const probaPct = (probability * 100).toFixed(1) + "%";
+        // 2. Tier Styling & Narrative
+        radialContainer.classList.remove("safe", "warn", "danger");
+        riskTierPill.classList.remove("safe", "warn", "danger");
 
-        if (prediction === 1 || risk_level === "High Risk") {
-            circle.classList.add("high");
-            resLabel.classList.add("high");
-            if (riskBarFill) riskBarFill.classList.add("high");
-            icon.textContent = "⚠️";
-            resLabel.textContent = "Academic Support Needed";
-            resRisk.textContent = "This student shows multiple indicators correlated with falling behind.";
-        } else if (risk_level === "Medium Risk") {
-            circle.classList.add("medium");
-            resLabel.classList.add("medium");
-            if (riskBarFill) riskBarFill.classList.add("medium");
-            icon.textContent = "⚡";
-            resLabel.textContent = "Moderate Academic Risk";
-            resRisk.textContent = "This student may benefit from proactive monitoring and early intervention.";
+        if (probability >= 0.7 || risk_level === "High Risk") {
+            radialContainer.classList.add("danger");
+            riskTierPill.classList.add("danger");
+            riskTierPill.textContent = "Critical Risk Profile";
+            riskEmoji.textContent = "🚨";
+            riskHeadline.textContent = "Immediate Academic Intervention Needed";
+            riskNarrative.textContent = "High probability of course failure or dropping out. Disproportionate negative indicators require structured faculty mediation.";
+        } else if (probability >= 0.4 || risk_level === "Medium Risk") {
+            radialContainer.classList.add("warn");
+            riskTierPill.classList.add("warn");
+            riskTierPill.textContent = "Moderate / Borderline Risk";
+            riskEmoji.textContent = "⚡";
+            riskHeadline.textContent = "Targeted Support Advised";
+            riskNarrative.textContent = "Student displays mixed indicators. Proactive advising and habit reinforcement can prevent progression into severe risk.";
         } else {
-            circle.classList.add("ok");
-            resLabel.classList.add("ok");
-            if (riskBarFill) riskBarFill.classList.add("ok");
-            icon.textContent = "✅";
-            resLabel.textContent = "On Track (Low Risk)";
-            resRisk.textContent = "This student is performing satisfactorily with a low risk of falling behind.";
+            radialContainer.classList.add("safe");
+            riskTierPill.classList.add("safe");
+            riskTierPill.textContent = "Low Risk · On Track";
+            riskEmoji.textContent = "🌟";
+            riskHeadline.textContent = "Academic Performance Strong";
+            riskNarrative.textContent = "Consistent study habits, robust attendance, and positive support structures correlate with high achievement.";
+            triggerConfetti();
         }
 
-        resProba.textContent = probaPct;
-        resRiskLevel.textContent = risk_level;
-
-        if (riskBarFill) {
-            // Animate width
-            riskBarFill.style.width = "0%";
-            setTimeout(() => {
-                riskBarFill.style.width = Math.min(Math.max(probability * 100, 4), 100) + "%";
-            }, 50);
+        // 3. Update Mini Comparative Bars
+        if (barMetricAtt && barFillAtt) {
+            barMetricAtt.textContent = `${payload.Attendance}%`;
+            barFillAtt.style.width = `${Math.min(payload.Attendance, 100)}%`;
+        }
+        if (barMetricStudy && barFillStudy) {
+            barMetricStudy.textContent = `${payload.Hours_Studied} hrs`;
+            barFillStudy.style.width = `${Math.min((payload.Hours_Studied / 40) * 100, 100)}%`;
+        }
+        if (barMetricScore && barFillScore) {
+            barMetricScore.textContent = `${payload.Previous_Scores}`;
+            barFillScore.style.width = `${Math.min(payload.Previous_Scores, 100)}%`;
+        }
+        if (barMetricSleep && barFillSleep) {
+            barMetricSleep.textContent = `${payload.Sleep_Hours} hrs`;
+            barFillSleep.style.width = `${Math.min((payload.Sleep_Hours / 10) * 100, 100)}%`;
         }
 
-        resultCard.classList.remove("hidden");
-        resultCard.scrollIntoView({ behavior: "smooth" });
+        // 4. Compute Strengths vs Risk Drivers
+        computeInsights(payload, probability);
     }
+
+    // Number counting animation
+    function animateValue(elem, start, end, duration) {
+        if (!elem) return;
+        const startTime = performance.now();
+        function update(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const current = start + (end - start) * progress;
+            elem.textContent = current.toFixed(1);
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            }
+        }
+        requestAnimationFrame(update);
+    }
+
+    // ── 9. Dynamic Strengths & Action Plan Generator ──
+    function computeInsights(payload, proba) {
+        const strengths = [];
+        const risks = [];
+        const actions = [];
+
+        // Attendance
+        if (payload.Attendance >= 88) {
+            strengths.push("High attendance rate (>88%)");
+        } else if (payload.Attendance < 75) {
+            risks.push("Critical attendance shortfall (<75%)");
+            actions.push({ icon: "📅", text: "Establish mandatory attendance tracking & bi-weekly check-ins" });
+        }
+
+        // Hours Studied
+        if (payload.Hours_Studied >= 22) {
+            strengths.push("Dedicated weekly study habit (22+ hrs)");
+        } else if (payload.Hours_Studied < 14) {
+            risks.push("Sub-optimal independent study hours");
+            actions.push({ icon: "⏱️", text: "Structure a scheduled 3-hr daily guided study block" });
+        }
+
+        // Peer Influence
+        if (payload.Peer_Influence === "Positive") {
+            strengths.push("Positive, academically-motivated peer circle");
+        } else if (payload.Peer_Influence === "Negative") {
+            risks.push("Negative peer circle strongly correlates with disengagement");
+            actions.push({ icon: "🤝", text: "Assign student to high-achieving peer study & project team" });
+        }
+
+        // Tutoring
+        if (payload.Tutoring_Sessions >= 2) {
+            strengths.push("Active tutoring reinforcement");
+        } else if (payload.Tutoring_Sessions === 0 && (payload.Previous_Scores < 70 || proba > 0.4)) {
+            risks.push("No supplemental tutoring in place");
+            actions.push({ icon: "🎓", text: "Enroll in departmental peer tutoring 2x weekly" });
+        }
+
+        // Sleep
+        if (payload.Sleep_Hours >= 7 && payload.Sleep_Hours <= 8) {
+            strengths.push("Healthy sleep & recovery routine");
+        } else if (payload.Sleep_Hours < 6) {
+            risks.push("Severe sleep deficit affects cognitive recall");
+            actions.push({ icon: "💤", text: "Counsel on sleep hygiene to ensure minimum 7h rest" });
+        }
+
+        // Parental Involvement & Resources
+        if (payload.Parental_Involvement === "High") {
+            strengths.push("Strong proactive home engagement");
+        } else if (payload.Parental_Involvement === "Low") {
+            risks.push("Limited home academic support");
+            actions.push({ icon: "📞", text: "Initiate monthly parent-counselor progress briefs" });
+        }
+
+        if (payload.Internet_Access === "No") {
+            risks.push("No home internet access");
+            actions.push({ icon: "📶", text: "Provide campus library hotspot or device loan program" });
+        }
+
+        if (payload.Learning_Disabilities === "Yes") {
+            actions.push({ icon: "📋", text: "Verify individualized education accommodation plan (IEP)" });
+        }
+
+        // Fallbacks
+        if (strengths.length === 0) {
+            strengths.push("Regular enrollment status", "Baseline score foundation");
+        }
+        if (risks.length === 0) {
+            risks.push("No critical vulnerabilities detected");
+        }
+        if (actions.length === 0) {
+            actions.push(
+                { icon: "⭐", text: "Maintain current academic rhythm and routine" },
+                { icon: "🎯", text: "Explore advanced placement or mentorship opportunities" }
+            );
+        }
+
+        // Render Strengths & Risks
+        strengthsList.innerHTML = strengths.slice(0, 3).map((s) => `<li>${s}</li>`).join("");
+        risksList.innerHTML = risks.slice(0, 3).map((r) => `<li>${r}</li>`).join("");
+
+        // Render Actions
+        actionPlanContainer.innerHTML = actions
+            .slice(0, 4)
+            .map(
+                (act) => `
+                <div class="action-item">
+                    <span class="action-item-icon">${act.icon}</span>
+                    <span>${act.text}</span>
+                </div>`
+            )
+            .join("");
+        if (actionCountBadge) actionCountBadge.textContent = `${actions.length} items`;
+    }
+
+    // ── 10. "What-If" Auto-Optimize Simulator ──
+    btnSimulate.addEventListener("click", () => {
+        showToast("Simulating optimal interventions...", "💡");
+
+        // Target protective optimizations
+        const targets = {
+            Attendance: 92,
+            Hours_Studied: 28,
+            Tutoring_Sessions: 2,
+            Sleep_Hours: 8,
+            Motivation_Level: "High",
+            Peer_Influence: "Positive",
+        };
+
+        // Smoothly adjust each slider
+        Object.entries(targets).forEach(([key, val]) => {
+            const slider = document.getElementById(key);
+            const select = document.getElementById(key);
+            if (slider && slider.type === "range") {
+                slider.value = val;
+                updateSliderVisual(key, val);
+            } else if (select) {
+                select.value = val;
+            }
+        });
+
+        // Trigger evaluation
+        executePrediction();
+    });
+
+    // ── 11. Copy Diagnostic Summary ──
+    btnExport.addEventListener("click", () => {
+        const payload = getFormData();
+        const score = probaNumber ? probaNumber.textContent : "0";
+        const tier = riskTierPill ? riskTierPill.textContent : "Unknown";
+
+        const text = `
+========================================
+  EDURISK AI — STUDENT DIAGNOSTIC BRIEF
+========================================
+Risk Level       : ${tier}
+Probability      : ${score}%
+Weekly Study     : ${payload.Hours_Studied} hrs/wk
+Attendance       : ${payload.Attendance}%
+Previous Score   : ${payload.Previous_Scores} / 100
+Tutoring         : ${payload.Tutoring_Sessions} sessions/wk
+Sleep            : ${payload.Sleep_Hours} hrs/day
+Peer Group       : ${payload.Peer_Influence}
+Motivation       : ${payload.Motivation_Level}
+Parent Support   : ${payload.Parental_Involvement}
+========================================
+Generated by EduRisk AI Platform
+        `.trim();
+
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("Diagnostic Brief copied to clipboard!", "📋");
+        }).catch(() => {
+            showToast("Brief ready to print", "🖨️");
+        });
+    });
+
+    // ── 12. Toast Notification Helper ──
+    function showToast(msg, icon = "ℹ️") {
+        if (!toast) return;
+        toastMsg.textContent = msg;
+        toastIcon.textContent = icon;
+        toast.classList.remove("hidden");
+        clearTimeout(toast._timer);
+        toast._timer = setTimeout(() => {
+            toast.classList.add("hidden");
+        }, 2800);
+    }
+
+    // ── 13. Confetti Animation (Zero-Dependency Vanilla Canvas) ──
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas ? canvas.getContext("2d") : null;
+    let particles = [];
+
+    function resizeCanvas() {
+        if (!canvas) return;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function triggerConfetti() {
+        if (!ctx || confettiActive) return;
+        confettiActive = true;
+        particles = [];
+        const colors = ["#6366f1", "#10b981", "#38bdf8", "#f59e0b", "#ec4899", "#8b5cf6"];
+
+        for (let i = 0; i < 90; i++) {
+            particles.push({
+                x: canvas.width / 2,
+                y: canvas.height * 0.45,
+                vx: (Math.random() - 0.5) * 14,
+                vy: (Math.random() - 0.9) * 16,
+                size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                rSpeed: (Math.random() - 0.5) * 8,
+                opacity: 1,
+            });
+        }
+
+        let frames = 0;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                p.x += p.vx;
+                p.y += p.vy;
+                p.vy += 0.35; // gravity
+                p.rotation += p.rSpeed;
+                p.opacity -= 0.012;
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate((p.rotation * Math.PI) / 180);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = Math.max(p.opacity, 0);
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+                ctx.restore();
+            });
+
+            frames++;
+            if (frames < 90) {
+                requestAnimationFrame(animate);
+            } else {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confettiActive = false;
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    // ── 14. Initial Load Evaluation ──
+    // Run an initial evaluation with default values so the dashboard starts live
+    setTimeout(() => {
+        executePrediction();
+    }, 150);
 });
