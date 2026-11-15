@@ -1,96 +1,75 @@
-# 🎓 Student Risk Predictor: Academic Early-Warning & Intervention Platform
+# 🎓 Student Risk Predictor
 
-An end-to-end Machine Learning web application designed to detect student academic vulnerabilities early and generate actionable, personalized intervention strategies. Built with an asynchronous **FastAPI** backend and an interactive, modern **frontend dashboard** (HTML5 / CSS3 / Vanilla JS).
-
----
-
-## 👥 Project Team
-
-1. **Abhijeet Patil**
-2. **Sneha Patel**
-3. **Adyasha Khuntia**
-4. **Prasad Dahore**
+An academic early-warning and intervention platform built to identify student vulnerabilities before they result in failing grades or course withdrawals. Powered by a FastAPI backend and a responsive frontend dashboard, the application translates 17 behavioral, academic, and socioeconomic indicators into immediate risk assessments and practical advising recommendations.
 
 ---
 
-## 🎯 Project Overview
+## 🎯 Overview
 
-Traditional academic assessments identify student struggles *after* exams are failed or courses are repeated. 
+Most academic support systems react only after a student falls behind on exams. The **Student Risk Predictor** shifts that timeline earlier by evaluating patterns across attendance, weekly study habits, sleep consistency, peer environment, and campus resource access. 
 
-The **Student Risk Predictor** serves as a **predictive early-warning system**:
-* Evaluates **17 academic, lifestyle, socioeconomic, and campus environment indicators** (such as attendance, study hours, sleep habits, peer circle influence, and tutoring).
-* Uses an $L_1$-regularized **Logistic Regression Pipeline** trained on 6,607 student records.
-* Delivers an **instant probability of academic risk**, highlights key protective vs. risk factors, and provides tailored intervention recommendations for educators and counselors.
+Using an L1-regularized Logistic Regression pipeline trained on 6,607 student records, the platform estimates the probability of academic risk in real time and outlines concrete steps educators and counselors can take to help.
 
 ---
 
 ## ✨ Key Features
 
-* **⚡ Real-Time Live Diagnostics**: Moving any slider or clicking a toggle recalculates the student's risk probability in real time.
-* **🎛️ Interactive Sliders with Color-Coded Fills**: Real-time visual progress bars showing current study hours, attendance rates, sleep duration, and exam history.
-* **📊 Rectangular Risk HUD & Spectrum Bar**: Clear risk percentage display with an animated spectrum bar ($0\text{–}40\%$ Safe, $40\text{–}70\%$ Borderline, $70\%+$ Critical).
-* **👥 Preset Student Archetypes**: Single-click buttons to load standardized student profiles (High Risk, Borderline, Honor Roll, or Reset).
-* **🛡️ Protective Factors vs. Risk Drivers**: Breaks down exactly which indicators are shielding the student and which are increasing risk.
-* **📋 Actionable Intervention Plan**: Generates targeted recommendations (e.g. structured daily study blocks, mandatory attendance tracking, peer tutoring).
-* **💡 "What-If" Auto-Optimization**: Demonstrates with one click how an at-risk profile can be adjusted into the safe zone.
-* **📋 Copy Diagnostic Brief**: Easily export and copy a structured report for counselor records.
-* **🌓 Light / Dark Theme Support**: High-contrast, clean UI with session-persisted theme switching.
+* **⚡ Real-Time Risk Diagnostics:** Adjusting any slider, dropdown, or toggle immediately recalculates the student's risk probability without requiring a page reload.
+* **🎛️ Interactive Metric Controls:** Visual progress sliders track study hours, classroom attendance, sleep duration, and prior exam performance against benchmark targets.
+* **📊 Risk Spectrum & Classification:** Displays an exact risk percentage alongside an animated status bar categorized into Safe (0–40%), Borderline (40–70%), and Critical (70%+) zones.
+* **👥 Sample Student Profiles:** One-click presets let you test standardized profiles (High Risk, Borderline, and Honor Roll) or reset inputs to baseline values.
+* **🛡️ Factor Breakdown:** Separates positive protective factors from negative risk drivers so advisors can see exactly what is influencing the score.
+* **📋 Tailored Intervention Plans:** Generates practical action items based on the student's specific weak points, such as structured study blocks, attendance check-ins, or peer tutoring.
+* **💡 Auto-Optimization Simulation:** Shows with a single click which habit adjustments would bring an at-risk profile back into the safe zone.
+* **📋 Diagnostic Brief Export:** Formats the current assessment and recommendations so you can copy them directly into advising notes.
+* **🌓 Theme Toggle:** Supports both light and dark modes with session persistence.
 
 ---
 
-## 📖 How to Use the Website
+## 📖 How to Use
 
-1. **Load a Preset Profile or Enter Custom Data**:
-   * Click on any archetype benchmark card (**Alex Miller** for High Risk, **Jordan Taylor** for Borderline, or **Maya Kapoor** for Safe) to instantly populate realistic sample data.
-   * Or adjust the individual controls manually on the left panel.
-
-2. **Adjust Academic & Behavioral Indicators**:
-   * **Academic Habits**: Set *Weekly Study Hours*, *Classroom Attendance (%)*, *Prior Exam Scores*, and *Tutoring Sessions*.
-   * **Lifestyle & Health**: Set *Daily Sleep Duration*, *Physical Exercise*, and *Extracurricular Participation*.
-   * **Family & Environment**: Select *Parental Involvement*, *Family Income Tier*, *Parent Education*, and *Distance from Campus*.
-   * **Campus & Psychological Factors**: Choose *Peer Circle Influence*, *Student Motivation*, *Instruction Quality*, and *Resource Access*.
-
-3. **Read the Live Diagnostic Report (Right Column)**:
-   * **Risk Score & Verdict**: Check the probability percentage and risk classification:
-     * 🟢 **Low Risk / On Track** ($< 40\%$) — High likelihood of academic success.
-     * 🟡 **Moderate / Borderline** ($40\% - 70\%$) — Needs proactive monitoring.
-     * 🔴 **Critical Risk** ($\ge 70\%$) — Requires immediate intervention.
-   * **Core Benchmarks**: View comparative meters for attendance, study hours, previous scores, and sleep against optimal targets.
-   * **Strengths & Vulnerabilities**: Review protective factors helping the student vs. risk contributors requiring attention.
-   * **Prescribed Interventions**: Follow the generated step-by-step action plan tailored to the student's needs.
-
-4. **Simulate Improvements & Export**:
-   * Click **💡 Auto-Optimize to Low Risk** to see what changes are needed to transition an at-risk student into the safe zone.
-   * Click **📋 Copy Diagnostic Brief** to copy a formatted summary directly to your clipboard for advising notes.
+1. **Choose a Starting Point:** Select one of the preset student cards (**Alex Miller** for High Risk, **Jordan Taylor** for Borderline, or **Maya Kapoor** for Safe) to populate sample metrics, or enter custom values manually on the left panel.
+2. **Configure Student Indicators:**
+   * **Academic Habits:** Adjust weekly study hours, class attendance percentage, previous exam scores, and tutoring sessions.
+   * **Lifestyle & Health:** Set daily sleep duration, physical activity frequency, and extracurricular involvement.
+   * **Family & Environment:** Specify parental involvement, family income tier, parent education level, and commute distance.
+   * **Campus & Support Factors:** Select peer circle influence, motivation level, teaching quality, and access to learning resources.
+3. **Review the Diagnostic Report:**
+   * **Risk Score:** Check the overall percentage and risk tier on the right panel:
+     * 🟢 **Low Risk (< 40%):** Strong indicators of ongoing academic stability.
+     * 🟡 **Moderate / Borderline (40% to 70%):** Warrants periodic check-ins and targeted support.
+     * 🔴 **Critical Risk (≥ 70%):** Requires immediate academic counseling and intervention.
+   * **Core Benchmarks:** Compare the student's attendance, study time, prior scores, and sleep against recommended baselines.
+   * **Protective vs. Risk Drivers:** Review which habits are supporting the student and which areas need attention.
+   * **Recommended Actions:** Follow the generated intervention steps tailored to the profile.
+4. **Simulate & Export:** Click **Auto-Optimize to Low Risk** to test how behavioral changes improve the score, or click **Copy Diagnostic Brief** to save a text summary to your clipboard.
 
 ---
 
-## 🚀 How to Run the Project Locally
+## 🚀 Local Setup & Installation
 
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/abhijeetptl357-coder/Student-Risk-Predictor.git
-cd "Student-Risk-Predictor"
+cd Student-Risk-Predictor
 ```
 
-### 2. Set Up Virtual Environment & Install Dependencies
+### 2. Set Up a Virtual Environment & Install Dependencies
 ```bash
-# Create and activate virtual environment
 python3 -m venv venv
 source venv/bin/activate      # On Windows use: venv\Scripts\activate
 
-# Install required packages
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 3. Start the Application Server
+### 3. Start the Backend Server
 ```bash
 uvicorn backend.main:app --reload --port 8000
 ```
 
-### 4. Open in Your Browser
-Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in any modern web browser.
+### 4. Launch the Application
+Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
 ---
 
@@ -98,35 +77,45 @@ Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in any modern web browser.
 
 ```text
 Student-Risk-Predictor/
-├── requirements.txt                    # Root Python dependencies
-├── README.md                           # Project documentation
-├── StudentPerformanceFactors.csv       # Training & validation dataset (6,607 records)
-├── student_risk_logreg_model.joblib    # Serialized scikit-learn ML pipeline
-├── notebook.ipynb                      # Exploratory Data Analysis & model training
+├── requirements.txt                   # Python dependencies
+├── README.md                          # Project documentation
+├── StudentPerformanceFactors.csv      # Dataset used for training and validation (6,607 records)
+├── student_risk_logreg_model.joblib   # Trained scikit-learn classification pipeline
+├── notebook.ipynb                     # Exploratory data analysis and model training notebook
 │
 ├── backend/
-│   ├── app.py                          # FastAPI application & ML prediction routes
-│   ├── main.py                         # Server entrypoint
-│   └── requirements.txt                # Backend dependencies
+│   ├── app.py                         # FastAPI routes and prediction endpoints
+│   ├── main.py                        # Application server entry point
+│   └── requirements.txt               # Backend-specific packages
 │
 └── frontend/
-    ├── index.html                      # Semantic UI dashboard
+    ├── index.html                     # Dashboard layout and structure
     ├── css/
-    │   └── style.css                   # Modern design system & responsive styling
+    │   └── style.css                  # Responsive styling and theme variables
     └── js/
-        └── app.js                      # Live prediction logic, sliders & preset engine
+        └── app.js                     # Interactive controls, live scoring, and preset logic
 ```
 
 ---
 
-## 🧠 Machine Learning Model Summary
+## 🧠 Model Summary
 
-* **Model Type:** Scikit-Learn Pipeline combining `ColumnTransformer` preprocessing with an $L_1$-penalized `LogisticRegression` classifier (`liblinear` solver).
-* **Dataset:** 6,607 student records with 17 academic and environmental features.
-* **Top Protective Indicators:** High Attendance, Study Hours, Parental Involvement, Resource Access.
-* **Top Risk Indicators:** Negative Peer Influence, Learning Disabilities without accommodation, Commute Distance.
+* **Architecture:** Scikit-Learn Pipeline pairing a `ColumnTransformer` preprocessor with an L1-penalized `LogisticRegression` classifier (`liblinear` solver).
+* **Training Data:** 6,607 student records spanning 17 academic, personal, and environmental features.
+* **Primary Protective Factors:** Consistent class attendance, higher weekly study hours, active parental involvement, and reliable access to educational resources.
+* **Primary Risk Drivers:** Negative peer influence, unaccommodated learning disabilities, and long daily commute distances.
+
+---
+
+## 👥 Project Team
+
+* **Abhijeet Patil**
+* **Sneha Patel**
+* **Adyasha Khuntia**
+* **Prasad Dahore**
 
 ---
 
 ## 📄 License
-This project is open-source and distributed under the **MIT License**.
+
+This project is open-source and available under the [MIT License](LICENSE).
