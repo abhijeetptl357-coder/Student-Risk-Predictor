@@ -400,10 +400,10 @@ Please read these before relying on any output:
 
 ## 👥 Team
 
-* **Abhijeet Patil**
-* **Sneha Patel**
-* **Adyasha Khuntia**
-* **Prasad Dahore**
+* **Abhijeet Patil** — [github.com/abhijeetptl357-coder](https://github.com/abhijeetptl357-coder)
+* **Sneha Patel** — [github.com/spprobit](https://github.com/spprobit)
+* **Adyasha Khuntia** — [github.com/jessicxt](https://github.com/jessicxt)
+* **Prasad Dahore** — [github.com/prasadymium911](https://github.com/prasadymium911)
 
 ---
 
